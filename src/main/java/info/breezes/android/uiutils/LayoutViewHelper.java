@@ -1,7 +1,9 @@
-package info.breezes.android.uiutils.annotation;
+package info.breezes.android.uiutils;
 
 import android.app.Activity;
 import android.view.View;
+import info.breezes.android.uiutils.annotation.LayoutView;
+import info.breezes.android.uiutils.annotation.OnClick;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
