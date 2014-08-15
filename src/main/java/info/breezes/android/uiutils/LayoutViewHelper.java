@@ -17,9 +17,9 @@ import java.util.HashMap;
 
 public class LayoutViewHelper {
 
-    private static HashMap<String, HashMap<String, Integer>> IdsCache = new HashMap<String, HashMap<String, Integer>>();
+    private static HashMap<String, HashMap<String, Integer>> idsCache = new HashMap<String, HashMap<String, Integer>>();
 
-    public static void InitLayout(final Activity activity) {
+    public static void initLayout(final Activity activity) {
         HashMap<Integer, View> viewCache = new HashMap<Integer, View>();
         Field fields[] = activity.getClass().getDeclaredFields();
         for (Field field : fields) {
@@ -66,7 +66,7 @@ public class LayoutViewHelper {
         }
     }
 
-    public static void InitLayout(View view, Object owner) {
+    public static void initLayout(View view, Object owner) {
         Field fields[] = owner.getClass().getDeclaredFields();
         for (Field field : fields) {
             LayoutView layoutView = field.getAnnotation(LayoutView.class);
@@ -81,8 +81,8 @@ public class LayoutViewHelper {
         }
     }
 
-    public static void InitLayoutWithName(final Activity activity) {
-        if (!IdsCache.containsKey(activity.getPackageName())) {
+    public static void initLayoutWithName(final Activity activity) {
+        if (!idsCache.containsKey(activity.getPackageName())) {
             String rIdName = activity.getPackageName() + ".R$id";
             try {
                 Class<?> rIdClass = activity.getClassLoader().loadClass(rIdName);
@@ -93,7 +93,7 @@ public class LayoutViewHelper {
                         ids.put(field.getName(), field.getInt(null));
                     }
                 }
-                IdsCache.put(activity.getPackageName(), ids);
+                idsCache.put(activity.getPackageName(), ids);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -101,7 +101,7 @@ public class LayoutViewHelper {
             }
         }
 
-        HashMap<String, Integer> ids = IdsCache.get(activity.getPackageName());
+        HashMap<String, Integer> ids = idsCache.get(activity.getPackageName());
         HashMap<Integer, View> viewCache = new HashMap<Integer, View>();
 
         if (ids.size() > 0) {
@@ -152,5 +152,9 @@ public class LayoutViewHelper {
                 }
             }
         }
+    }
+
+    public static void clear(){
+        idsCache.clear();
     }
 }
